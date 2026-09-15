@@ -1,0 +1,7 @@
+/v1/snapshot
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=120
+
+/v1/snapshot.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=120
