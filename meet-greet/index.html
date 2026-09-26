@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="坂道infoのミーグリ完売表。公式確認・X当落報告による予想・前作の同じ応募次数との比較。">
+<title>ミーグリ完売表 | 坂道info</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#24212e;background:#f7f6fb;line-height:1.65;--purple:#6c3db9;--line:#e6e0ee}*{box-sizing:border-box}body{margin:0}a{color:var(--purple)}header,main,footer{max-width:1240px;margin:auto;padding:20px}header{display:flex;justify-content:space-between;gap:20px;align-items:center}h1{font-size:clamp(25px,5vw,36px);margin:10px 0}h2{font-size:20px}p{margin:8px 0}.brand{font-weight:800;text-decoration:none}.eyebrow{font-size:12px;letter-spacing:.15em;color:var(--purple);font-weight:700}.muted,small{color:#686070}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0}.controls{display:flex;flex-wrap:wrap;gap:14px}.controls label{display:flex;flex-direction:column;font-size:13px;gap:5px}.controls .check{flex-direction:row;align-items:center;margin-top:20px}select,input,button{font:inherit}select,input[type=search],button{padding:9px 12px;border-radius:9px;border:1px solid #c9bfd7;background:white;color:inherit;max-width:100%}button{cursor:pointer}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #9b70d5;outline-offset:2px}.stats{display:flex;flex-wrap:wrap;gap:14px}.stat{flex:1;min-width:150px;padding:16px;border:1px solid var(--line);border-radius:12px;background:white}.stat strong{font-size:28px;display:block}.legend{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.tag{font-size:12px;display:inline-block;border-radius:7px;padding:4px 8px;white-space:nowrap}.sold_out{background:#6c3db9;color:white}.sold_out small{color:inherit}.likely{background:#f4e8ff;color:#602b93;border:1px dashed #884daf}.possible{background:#fff3da;color:#765500;border:1px dashed #b98317}.available{background:#eff8f3;color:#24503b}.closed,.exempt,.cancelled,.unknown{background:#f0eef3;color:#655e6c}.scroll{overflow:auto;max-height:65vh;border:1px solid var(--line);border-radius:12px}table{border-collapse:separate;border-spacing:0;min-width:100%;font-size:13px;white-space:nowrap}th,td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:center;background:white}thead th{position:sticky;top:0;z-index:2;background:#f1edf8}th:first-child{position:sticky;left:0;text-align:left;z-index:1}thead th:first-child{z-index:3}td button{padding:5px 8px;border:0;min-width:82px}.cell-note{display:block;font-size:10px}.notice{border-left:4px solid #b58112;background:#fff6df;padding:12px 16px;border-radius:7px}.empty{padding:40px 15px;text-align:center}dialog{border:1px solid var(--line);border-radius:15px;max-width:min(560px,92vw);max-height:85vh;overflow:auto;padding:24px}dialog::backdrop{background:#20142b66}.actions{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.delta{color:#553194;font-weight:700}[hidden]{display:none!important}footer{font-size:12px}details{margin-top:14px}summary{cursor:pointer;font-weight:600}.error{color:#a22435}#message{white-space:pre-wrap}@media(max-width:600px){header,main,footer{padding:14px}.panel{padding:14px}.controls label{flex:1;min-width:135px}.stat{min-width:130px}.stat strong{font-size:24px}th,td{padding:9px}h1{margin-top:4px}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="../">坂道 info</a><a href="../">ニュースへ戻る</a></header>
+<main>
+<div class="eyebrow">MEET & GREET TRACKER</div><h1>ミーグリ完売表</h1>
+<p class="muted">公式確認と当落報告の予想を分けて、前作と同じ応募次数で比較。</p>
+<p id="demo-notice" class="notice" hidden>デモ表示：メンバー名・完売数・予想はすべて架空です。実際の販売状況ではありません。</p>
+<p id="message" role="status" aria-live="polite">データを読み込んでいます。</p>
+<div id="content" hidden>
+<section class="panel controls" aria-label="表示条件">
+<label>グループ<select id="group"><option>乃木坂46</option><option>櫻坂46</option><option>日向坂46</option></select></label>
+<label>開催形式<select id="format"><option value="online">オンライン</option><option value="real">リアル</option></select></label>
+<label>シングル<select id="release"></select></label>
+<label>結果の次数<select id="round"></select></label>
+<label>メンバー名<input id="member" type="search" placeholder="名前で絞り込み"></label>
+<label class="check"><input id="predictions" type="checkbox" checked>予想も表示</label>
+</section>
+<div id="summary" class="stats" aria-live="polite"></div>
+<p id="timing" class="muted"></p>
+<div class="legend"><span class="tag sold_out">完売確認</span><span class="tag likely">完売予想・強</span><span class="tag possible">完売予想</span><span class="tag available">販売あり</span><span class="tag unknown">未確認</span><span class="tag exempt">不参加・中止は別扱い</span></div>
+<section aria-label="完売表"><div class="actions"><h2>日程・部ごとの状況</h2><button id="csv" type="button">CSV保存</button></div><p class="muted">横にスクロールできます。各枠を押すと確認日時・根拠件数を表示します。</p><div id="grid" class="scroll" tabindex="0"></div></section>
+<section class="panel"><h2>前作との比較</h2><p id="compare-note" class="muted"></p><div id="comparison" class="scroll" tabindex="0"></div><p id="accuracy" class="muted"></p></section>
+<details class="panel"><summary>集計・予想のルール</summary><p>第N+1次の受付中に確認した販売状況を、第N次までの結果として記録します。ページに枠がない・受付終了・取得失敗という理由だけでは完売にしません。再販売は新しい公式確認を優先します。</p><p>予想は同一アカウントの重複報告をまとめ、対象シングル・次数・メンバー・日付・部と応募／当選枚数が特定できた報告だけで作ります。「強」は異なる3アカウント以上の落選あり報告、かつ報告アカウントの75%以上、「予想」は2アカウント以上です。暫定的なルールであり、完売確率・実際の当選確率ではありません。</p><p>古い完売確認は最終確認次数付きで引き継ぎます。前作比較は公式確認のみで集計し、情報不足なら差分を出しません。不参加・中止を分母から除外し、販売部数が変わる場合はその旨を表示します。</p></details>
+</div>
+</main><footer>非公式の集計です。応募できる枠・受付時間は公式サイトで確認してください。投稿本文や投稿者IDはこのページでは公開しません。</footer>
+<dialog id="detail"><form method="dialog"><button style="float:right" aria-label="閉じる">閉じる</button></form><div id="detail-body"></div></dialog>
+<script type="module" src="./app.mjs"></script>
+</body></html>
