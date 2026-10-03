@@ -50,3 +50,30 @@ Checked 2026-09-27. These source pages may themselves lag membership changes; th
 - https://sp.nogizaka46.com/p/members
 - https://sakurazaka46.com/s/s46/search/artist
 - https://www.hinatazaka46.com/s/official/search/artist
+
+## Refinement regression checks (2026-10-03)
+
+Baseline: `25b6fc9828a7022487e7b450e3cb005154fdf5dd` on the source-preservation branch.
+
+- Leaving a valid shared fragment (including browser history navigation) restores the session's local draft and clears shared-mode seat selection/undo. Invalid shared fragments keep the current state and do not overwrite the draft. Draft recovery works in memory when storage writes fail.
+- PNG generation snapshots the title, formation and member count before any asynchronous work. Later edits cannot alter that image or its native-share title. A busy label and `aria-busy` accompany a guard against repeated exports, including rerenders while fonts/PNG conversion are pending. Failures release the guard for retry.
+- The exact inline-script CSP hash is regenerated and regression-checked.
+
+From the repository root, run the dependency-free checks with Node 22 or newer:
+
+```sh
+node --test tests/senbatsu-unit.test.cjs
+```
+
+Nine checks passed against the final code; the same suite failed seven checks on the baseline. These tests execute the actual inline script with lightweight DOM/canvas/storage doubles. They verify behavior and CSP hash integrity, not rendering, native APIs or browser security enforcement.
+
+The 11-case real-browser suite is also supplied:
+
+```sh
+# Requires Playwright (authored against 1.62.1) and installed Chromium.
+CHROMIUM_PATH=/path/to/chromium node --test tests/senbatsu.test.cjs
+```
+
+Browser execution was blocked in the current cloud environment: local Chromium could not create a required socket (`Operation not permitted`), and the managed cloud browser rejected the loopback page (`ERR_BLOCKED_BY_CLIENT`). No browser assertions completed in the cloud. Subsequent isolated macOS validation passed all 11 checks in Chrome and all 11 checks in Playwright WebKit, plus all 9 VM checks. PNG visual inspection and navigation/modal checks also passed. It covers real localStorage/reload, back/forward, malformed fragments, export concurrency/failure, PNG dimensions, CSP execution blocking and 320/390/1440-pixel overflow.
+
+Real iPhone/Safari download and native-share behavior remain unverified. Native share is stubbed in the supplied Chromium test. This refinement does not publish, deploy, merge or modify the generated Expo homepage; its missing upstream source/deployment preservation caveat above still applies.
