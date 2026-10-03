@@ -25,9 +25,11 @@ CHROMIUM_PATH="$(node -e 'process.stdout.write(require("playwright").chromium.ex
 
 `tests/face-ranking-unit.test.cjs` は名簿一致、保存分離、共有復帰、順位操作、PNG snapshot、CSPのスクリプトハッシュを確認します。`tests/face-ranking.test.cjs` は実ブラウザで写真形式、破損・容量・画素数、置換・削除、非同期中の編集と共有遷移、写真snapshotのPNGピクセル、320/390/1440幅、検索、focus、ダイアログ、CSP拒否と外部通信がないことを確認します。検証用写真は単色canvasから生成し、人物画像は使いません。目視確認用PNGは無視対象の `test-results/` に出力します。日本語フォントがない検証ホストでは日本語表示を確認できないため、隔離したフォント環境を用意してください。
 
+WebKit専用検証は `npx playwright install webkit` 後に `BROWSER=webkit node --test tests/face-ranking.test.cjs` で実行できます。WebKit実行時には `CHROMIUM_PATH` を設定しないでください。
+
 スクリプトを編集したら、`<script>` 内の正確なバイト列のSHA-256をbase64にしてCSPの `script-src 'sha256-…'` を更新してください。ユニットテストが一致を検証します。`default-src 'none'` と画像の `data: blob:` のみの許可を維持します。
 
-2026-10-03、VPSの専用checkoutでユニット21件とChromiumブラウザ20件（既存選抜を含む）が通過しました。実機iPhone/Safariのnative共有・写真picker・ダウンロードは未確認です。WebKitは未実行です。VPS共有tmpの容量制限を回避するため `TMPDIR` を専用checkout内へ切り替え、日本語フォントも専用環境で有効にして再検証しました。
+2026-10-03、VPSの専用checkoutでユニット21件とChromiumブラウザ22件（既存選抜を含む）が通過しました。実機iPhone/Safariのnative共有・写真picker・ダウンロードは未確認です。WebKit 26.5はVPSのWPE/EGL環境でページ生成できなかったため、VPS固定SHAのソースarchiveをhash確認のうえMac隔離環境へ渡して検証し、好き顔ブラウザ11件が通過しました。Macではソースを編集していません。共有ダイアログ終了後のfocus復帰はWebKitで検出してVPSで修正し、CSPも更新しました。保存とreload・共有からの下書き復元、写真操作、3回連続PNG出力と古いobject URL解放も確認しました。quotaテストはQuotaExceededErrorを注入して保存失敗処理を検証しています。VPS共有tmpの容量制限を回避するため `TMPDIR` を専用checkout内へ切り替え、日本語フォントも専用環境で有効にして再検証しました。
 
 ## 公開の保護
 
