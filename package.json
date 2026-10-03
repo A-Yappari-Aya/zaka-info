@@ -1,0 +1,9 @@
+{
+  "name": "zaka-info-fan-tools",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*unit.test.cjs",
+    "test:browser": "node --test --test-concurrency=1 tests/face-ranking.test.cjs tests/senbatsu.test.cjs"
+  },
+  "devDependencies": {"playwright": "1.61.1"}
+}
